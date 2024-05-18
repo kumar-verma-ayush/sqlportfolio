@@ -1,0 +1,43 @@
+create database Titanic;
+use Titanic;
+select * from titanics;
+-- 1. Find the number of passengers who survived.
+select count(*) as "passengers_survived" from titanics where Survived=1;
+-- 2. show the first 10 row of the dataset.
+select * from titanics limit 10;
+select * from titanics order by PassengerID desc limit 10;
+-- 3- Find the average age of all passengers.
+select avg(age) from titanics;
+-- 4- Find the number of passengers in each class.
+select pclass,count(*) as count_each_class from titanics group by pclass;
+-- 5- Find the first 10 rows of dataset sorted by passenger class in descending order.
+select * from titanics order by Pclass desc limit 10;
+-- 6- Find the average fare paid by passengers in each class.
+select avg(Fare),Pclass from titanics group by Pclass;
+-- 7- find the number of passengers in each class sorted by class in ascending order.
+select Pclass,count(*) as "sort_by_passenger" from titanics group by Pclass	order by Pclass asc;
+-- 8- Find the name of the passenger with the highest fare.
+select Name,Fare from titanics where Fare=(select max(Fare) from titanics);
+select max(Fare) from titanics;
+-- 9- Find the name of the passenger who had the highest age among the survivors.
+select name,Age from titanics where Age=(select max(Age) from titanics where Survived=1);
+select max(Age) from titanics where Survived=1;
+-- 10-find the name of the passenger who had the most parents or children on board.
+select * from titanics;
+select name,parch from titanics where parch=(select max(Parch) from titanics);
+-- 11-Find the number of passengers who paid more than the average fare.
+select count(*) from titanics where fare>(select avg(fare) from titanics);	
+-- 12- find the number of female and male passengers who survived and order the results by sex in ascending order.
+select count(*),sex from titanics where survived=1 group by sex order by sex asc;
+-- 13- Find the name,age,fare of the oldest passenger who survived.
+select name,age,fare from titanics where age=(select max(age) from titanics where survived=1);
+-- 14- Find the name,and age of the youngest female passenger who survived in the third class.
+select name,age from titanics where sex="female"and Pclass=3 and survived=1 and age=(select min(age) from titanics where pclass=3 and sex="Female" and survived=1);
+delete from titanics where age=0;
+-- 15- find the number of female and male-
+select count(*) as number_of_sex,sex from titanics group by sex;
+select
+sum(case when sex="male" then 1 else 0 end) as Num_male,
+sum(case when sex="Female" then 1 else 0 end) as Num_female from titanics;
+-- 16- select all passengers who traveled in a cabin that was not shared by other passengers-
+select * from titanics where cabin not in (select cabin from titanics group by cabin having count(*)>1);

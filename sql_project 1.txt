@@ -1,0 +1,64 @@
+create database salaris;
+use salaris;
+select * from salaries;
+-- 2 show only the EmployeeName and JobTitle columns.
+select EmployeeName,JobTitle from salaries;
+-- 3 show the number of employees in the table.
+select count(EmployeeName) from salaries;
+select count(*) from salaries;
+-- 4 show the unique job titles in the table.
+select distinct(JobTitle) from salaries;
+-- 5 show the job title and overtime pay for all employees with overtime pay greater than 50000.
+select * from salaries;
+select JobTitle,OvertimePay from salaries where OvertimePay>50000;
+-- 6 show the average base pay for all employees.
+select avg(BasePay) as average_of_basepay from salaries;
+-- 7 show the 10 highest paid employees.
+select * from salaries order by BasePay desc limit 10;
+select EmployeeName,TotalPay from salaries order by TotalPay desc limit 10;
+-- 8 show the average of BasePay,OvertimePay, and otherPay for each employee.
+select EmployeeName,(BasePay+OvertimePay+OtherPay)/3 as all_avg_pay from salaries;
+-- 9 show all employees who have the word "Manager" in their job title.
+select EmployeeName,JobTitle from salaries where JobTitle like "%Manager%";
+-- 10 show all employees with a job tittle not equal to "Manager".
+select EmployeeName,JobTitle from salaries where JobTitle != "%Manager%";
+select EmployeeName,JobTitle from salaries where JobTitle <> "%Manager%";
+-- 11 show all employees with a total pay batween 50000 and 75000.
+select * from salaries where TotalPay between 50000 and 75000;
+-- 12 show all employees with a base pay less than 50000 or a total pay greater than 100000.
+select * from salaries where BasePay < 50000 or TotalPay > 100000;
+-- 13 shoe all employees with a total pay benefits value between 125000 and 150000 and a job title containing the word "Director".
+select * from salaries where TotalPayBenefits between 125000 and 150000 and JobTitle like"%Director%";
+-- 14 show all enployees ordered by their total pay  benifits in descending order.
+select * from salaries  order by TotalPayBenefits desc;
+-- 15 show all job titles with an average base pay of at least 100000 and order them by the average base pay in descending order.
+select JobTitle,avg(BasePay) as avgbasepay from salaries group by JobTitle having avg(BasePay)>=100000 order by avgbasepay desc;
+-- 16 delete column.
+select * from salaries;
+alter table salaries drop column Notes;
+-- 17 update the base pay of all employees with the job title containg "Manager" by increasing it by 10%.
+update salaries set BasePay=BasePay+(BasePay*10/100) where JobTitle like"%Manager%";
+-- 18 delete all employees who have no OvertimePay.
+select * from salaries where OvertimePay=0;
+delete from salaries where OvertimePay=0;
+
+
+
+use cars;
+use old_car;
+select count(Name) from cars_dekho;
+select * from cars_dekho;
+select count(*) from cars_dekho;
+select count(Name) from cars_dekho where year=2023;
+select count(Name) from cars_dekho where year between 2020 and 2022;
+select count(Name) from cars_dekho where year in(2020,2021,2023) group by year;
+select year,count(*) from cars_dekho group by year;
+select count(*) from cars_dekho where fuel="Diesel" and year=2020;
+select count(*) from cars_dekho where fuel="Petrol" and year=2020;
+select year,count(*) from cars_dekho where fuel="Petrol" group by year;
+select year,count(*) from cars_dekho where fuel="Diesel" group by year;
+select year,count(*) from cars_dekho where fuel="CNG" group by year;
+select year,count(*) as number  from cars_dekho group by year having number>100;
+select year,count(*) as number  from cars_dekho group by year having number<50;
+select count(*) from cars_dekho where year between 2015 and 2023;
+select * from cars_dekho where year between 2015 and 2023;
